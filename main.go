@@ -3,15 +3,23 @@ package main
 import (
 	"fmt"
 
-	"github.com/hjkimGithub/learnGo/accounts"
+	"github.com/hjkimGithub/learnGo/mydict"
 )
 
 func main() {
-	account := accounts.NewAccount("nico")
-	account.Deposit(10)
-	// err := account.Withdraw(15)
+	dictionary := mydict.Dictionary{}
+	word := "hello"
+	dictionary.Add(word, "First")
+	fmt.Println(word)
+	dictionary.Update(word, "Helloo")
+	word, _ = dictionary.Search(word)
+	fmt.Println(word)
+	dictionary.Delete(word)
+	_, err := dictionary.Search(word)
+	fmt.Println(err)
+	// err := dictionary.Update("bye", "BYEBYE")
 	// if err != nil {
 	// 	fmt.Println(err)
 	// }
-	fmt.Println(account)
+
 }
