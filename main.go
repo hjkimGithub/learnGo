@@ -1,88 +1,33 @@
 package main
 
-import (
-	"fmt"
-)
+import "fmt"
 
-func getMyAge() int {
-	return 22
-}
-
-type ColorType int
-
-const (
-	Red ColorType = iota
-	Blue
-	Green
-	Yellow
-)
-
-func colorToString(color ColorType) string {
-	switch color {
-	case Red:
-		return "RED"
-	case Blue:
-		return "BLUE"
-	case Green:
-		return "GREEN"
-	case Yellow:
-		return "YELLOW"
-	default:
-		return "UNDEFINED"
-	}
-}
-
-func getMyFavoriteColor() ColorType {
-	return Blue
+func ChageArray(arr [5]int) {
+	arr[3] = 3000
 }
 
 func main() {
-	day := "thursday"
+	a := [5]int{1, 2, 3, 4, 5}
+	b := [5]int{500, 400, 300, 200, 100}
 
-	switch day {
-	case "monday", "tuesday":
-		fmt.Println("m,tu")
-	case "wednesday", "thursday", "friday":
-		fmt.Println("w, th, f")
+	for i, v := range a {
+		fmt.Printf("a[%d] = %d\n", i, v)
 	}
-
-	temp := 18
-
-	switch true {
-	case temp < 10, temp > 30:
-		fmt.Println("no outside")
-	case temp >= 10 && temp < 20:
-		fmt.Println("slightly cold")
-	case temp >= 15 && temp < 25:
-		fmt.Println("outside")
-	default:
-		fmt.Println("warm")
+	fmt.Println()
+	for i, v := range b {
+		fmt.Printf("b[%d] = %d\n", i, v)
 	}
+	fmt.Println()
 
-	switch age := getMyAge(); age {
-	case 10:
-		fmt.Println("teen")
-	case 33:
-		fmt.Println("pair 3")
-	default:
-		fmt.Printf("age: %d\n", age)
+	b = a
+	for i, v := range b {
+		fmt.Printf("b[%d] = %d\n", i, v)
 	}
-	// age gone
-	// fmt.Println(age)
+	fmt.Println()
 
-	// switch age2 := getMyAge(); true {
-	switch age2 := getMyAge(); {
-	case age2 < 10:
-		fmt.Println("Child")
-	case age2 < 20:
-		fmt.Println("Teen")
-		// break
-	case age2 < 30:
-		fmt.Println("20s")
-		// fallthrough
-	default:
-		fmt.Println("My age: ", age2)
-	}
-
-	fmt.Println("My favorite color is ", colorToString(getMyFavoriteColor()))
+	c := [5]int{1, 2, 3, 4, 5}
+	ChageArray(c)
+	fmt.Println(c)
+	// did not change
+	// another memory addr
 }
