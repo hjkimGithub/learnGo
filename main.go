@@ -4,13 +4,13 @@ import (
 	"fmt"
 )
 
-func F(n int) int {
-	if n < 2 {
-		return n
-	}
-	return F(n-2) + F(n-1)
-}
+const (
+	// C1 uint = iota + 1
+	C1 uint = 1 << iota
+	C2
+	C3
+)
 
 func main() {
-	fmt.Println(F(10))
+	fmt.Println(C1, C2, C3)
 }
