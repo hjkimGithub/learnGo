@@ -3,23 +3,28 @@ package main
 import "fmt"
 
 func main() {
-	a := 3
-	var b float64 = 3.5
+	a := 123
+	b := 456
+	c := 123456789
 
-	var c int = int(b)
-	d := float64(a * c)
+	fmt.Printf("%5d, %5d\n", a, b)
+	fmt.Printf("%05d, %05d\n", a, b)
+	fmt.Printf("%-5d, %-5d\n", a, b)
 
-	var e int64 = 7
-	f := int64(d) * e
+	fmt.Printf("%5d, %5d\n", c, c)
+	fmt.Printf("%05d, %05d\n", c, c)
+	fmt.Printf("%-5d, %-5d\n", c, c)
 
-	var g int = int(b * 3)
-	var h int = int(b) * 3
-	fmt.Println(g, h, f)
+	d := 324.13455
+	e := 3.14
 
-	var i float32 = 1234.523
-	var j float32 = 3456.123
-	var k float32 = i * j
-	var l float32 = k * 3
+	fmt.Printf("%08.2f\n", d)
+	fmt.Printf("%08.2g\n", d)
+	fmt.Printf("%8.5g\n", d)
+	fmt.Printf("%f\n", e)
 
-	fmt.Println(i, j, k, l)
+	str := "Hello\tGo\t\tWorld\n\"Go\"is Awesome!\n\\"
+	fmt.Print(str)
+	fmt.Printf("%s", str)
+	fmt.Printf("%q", str)
 }
