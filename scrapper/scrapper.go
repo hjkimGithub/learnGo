@@ -10,7 +10,6 @@ import (
 	"strings"
 
 	"github.com/PuerkitoBio/goquery"
-	// "github.com/labstack/echo"
 )
 
 type extractedJob struct {

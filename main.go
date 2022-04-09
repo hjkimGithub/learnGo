@@ -2,32 +2,12 @@ package main
 
 import "fmt"
 
-func ChageArray(arr [5]int) {
-	arr[3] = 3000
-}
-
 func main() {
-	a := [5]int{1, 2, 3, 4, 5}
-	b := [5]int{500, 400, 300, 200, 100}
-
-	for i, v := range a {
-		fmt.Printf("a[%d] = %d\n", i, v)
-	}
-	fmt.Println()
-	for i, v := range b {
-		fmt.Printf("b[%d] = %d\n", i, v)
-	}
-	fmt.Println()
-
-	b = a
-	for i, v := range b {
-		fmt.Printf("b[%d] = %d\n", i, v)
-	}
-	fmt.Println()
-
-	c := [5]int{1, 2, 3, 4, 5}
-	ChageArray(c)
-	fmt.Println(c)
-	// did not change
-	// another memory addr
+	foods := []string{"potato", "pizza", "pasta"}
+	// for i := 0; i < len(foods); i++ {
+	// 	fmt.Println(foods[i])
+	// }
+	fmt.Printf("%v\n", foods)
+	foods = append(foods, "tomato")
+	fmt.Printf("%v\n", foods)
 }
