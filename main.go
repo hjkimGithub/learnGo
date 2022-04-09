@@ -1,12 +1,15 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/hjkimGithub/learnGo/person"
+)
 
 func main() {
-	a := 2
-	fmt.Println(a, &a)
-	b := &a
-	fmt.Println(a, &a, b, *b)
-	a = 12
-	fmt.Println(a, &a, b, *b)
+	nico := person.Person{}
+	nico.SetDetails("nico", 12)
+	fmt.Println(nico)
+	nico.SetDetails2("nico", 12)
+	fmt.Println(nico)
 }
