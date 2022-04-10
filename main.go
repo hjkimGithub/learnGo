@@ -1,61 +1,41 @@
 package main
 
-import (
-	"fmt"
-	"reflect"
-	"strings"
-	"unsafe"
-)
+import "fmt"
 
-func ToUpper1(str string) string {
-	var rst string
-	for _, c := range str {
-		if c >= 'a' && c <= 'z' {
-			rst += string('A' + (c - 'a'))
-		} else {
-			rst += string(c)
-		}
-	}
-	return rst
+func changeArray(array2 [5]int) {
+	array2[2] = 200
 }
 
-// better memory usage
-func ToUpper2(str string) string {
-	var builder strings.Builder
-	for _, c := range str {
-		if c >= 'a' && c <= 'z' {
-			builder.WriteRune('A' + (c - 'a'))
-		} else {
-			builder.WriteRune(c)
-		}
-	}
-	return builder.String()
+func changeSlice(slice2 []int) {
+	slice2[2] = 200
 }
 
 func main() {
-	str1 := "Hello World!"
-	str2 := str1
+	array := [5]int{1, 2, 3, 4, 5}
+	slice := []int{1, 2, 3, 4, 5}
 
-	stringHeader1 := (*reflect.StringHeader)(unsafe.Pointer(&str1))
-	stringHeader2 := (*reflect.StringHeader)(unsafe.Pointer(&str2))
+	changeArray(array)
+	changeSlice(slice)
 
-	fmt.Println(stringHeader1)
-	fmt.Println(stringHeader2)
+	fmt.Println(array, slice)
 
-	var str3 string = "Hello world"
-	var slice []byte = []byte(str3)
+	fmt.Println()
 
-	// string: immutable
-	// str3[2] = 'a'
-	slice[2] = 'a'
+	// slice1 := make([]int, 3, 5)
+	slice1 := []int{1, 2, 3}
+	slice2 := append(slice1, 4, 5)
+	fmt.Println(slice1, len(slice1), cap(slice1))
+	fmt.Println(slice2, len(slice2), cap(slice2))
 
-	stringHeader3 := (*reflect.StringHeader)(unsafe.Pointer(&str3))
-	sliceHeader3 := (*reflect.StringHeader)(unsafe.Pointer(&slice))
+	slice1[1] = 100
 
-	fmt.Println(stringHeader3.Data)
-	fmt.Println(sliceHeader3.Data)
+	fmt.Println("After change second element")
+	fmt.Println(slice1, len(slice1), cap(slice1))
+	fmt.Println(slice2, len(slice2), cap(slice2))
 
-	var str4 string = "Hello World!!"
-	fmt.Println(ToUpper1(str4))
-	fmt.Println(ToUpper2(str4))
+	slice1 = append(slice1, 500)
+	fmt.Println("After append 500")
+	fmt.Println(slice1, len(slice1), cap(slice1))
+	fmt.Println(slice2, len(slice2), cap(slice2))
+
 }
