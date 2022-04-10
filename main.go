@@ -24,9 +24,17 @@ type Hamster struct {
 	Animal
 }
 
+func (h Hamster) introduce() {
+	fmt.Println("내 햄스터 이름은 " + h.name + "입니다.")
+}
+
 type Dog struct {
 	// Animal 구조체의 자료형만 선언하면 상속과 같은 역할
 	Animal
+}
+
+func (d Dog) introduce() {
+	fmt.Println("내 강아지의 이름은 " + d.name + "입니다.")
 }
 
 func main() {
