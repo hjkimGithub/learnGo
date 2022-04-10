@@ -1,33 +1,50 @@
 package main
 
-import (
-	"fmt"
-	"unsafe"
-)
+import "fmt"
 
-type User struct {
-	Age   int32
-	Score float64
+type Cat struct {
+	name string
 }
 
-type User2 struct {
-	A int8
-	B int
-	C int8
-	D int
-	E int8
+// (a Cat) -> Cat 전용 메서드
+func (a Cat) cry() {
+	fmt.Println("야옹~")
 }
 
-type User3 struct {
-	A int8
-	B int8
-	C int8
-	D int
-	E int
+type Animal struct {
+	name string
+}
+
+func (a Animal) introduce() {
+	fmt.Println("애완동물의 이름은 " + a.name + "입니다.")
+}
+
+type Hamster struct {
+	// Animal 구조체의 자료형만 선언하면 상속과 같은 역할
+	Animal
+}
+
+type Dog struct {
+	// Animal 구조체의 자료형만 선언하면 상속과 같은 역할
+	Animal
 }
 
 func main() {
-	user2 := User2{1, 2, 3, 4, 5}
-	user3 := User3{1, 2, 3, 4, 5}
-	fmt.Println(unsafe.Sizeof(user2), unsafe.Sizeof(user3))
+	kitty := Cat{"나비"}
+	kitty.cry() // 야옹~
+	// cry()       // error
+
+	a := Animal{"통통이"}
+	mouse := Hamster{}
+	puppy := Dog{}
+
+	mouse.Animal.name = "나비"
+	puppy.Animal.name = "뭉치"
+
+	a.introduce()     // 내 애완동물의 이름은 꿀꿀이입니다.
+	mouse.introduce() // 내 애완동물의 이름은 나비입니다.
+	puppy.introduce() // 내 애완동물의 이름은 뭉치입니다.
+
+	mouse.Animal.introduce() // 내 애완동물의 이름은 나비입니다.
+	puppy.Animal.introduce() // 내 애완동물의 이름은 뭉치입니다.
 }
