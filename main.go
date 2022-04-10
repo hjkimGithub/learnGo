@@ -1,29 +1,61 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"reflect"
+	"strings"
+	"unsafe"
+)
+
+func ToUpper1(str string) string {
+	var rst string
+	for _, c := range str {
+		if c >= 'a' && c <= 'z' {
+			rst += string('A' + (c - 'a'))
+		} else {
+			rst += string(c)
+		}
+	}
+	return rst
+}
+
+// better memory usage
+func ToUpper2(str string) string {
+	var builder strings.Builder
+	for _, c := range str {
+		if c >= 'a' && c <= 'z' {
+			builder.WriteRune('A' + (c - 'a'))
+		} else {
+			builder.WriteRune(c)
+		}
+	}
+	return builder.String()
+}
 
 func main() {
-	// 	str1 := "Hello\n'World'\t\n"
-	// 	str2 := `Hello
-	// 'World'
-	// `
-	// 	fmt.Println(str1)
-	// 	fmt.Println()
-	// 	fmt.Println(str2)
+	str1 := "Hello World!"
+	str2 := str1
 
-	str3 := "Hello 월드!"
-	runes := []rune(str3)
+	stringHeader1 := (*reflect.StringHeader)(unsafe.Pointer(&str1))
+	stringHeader2 := (*reflect.StringHeader)(unsafe.Pointer(&str2))
 
-	fmt.Println(len(str3), len(runes))
+	fmt.Println(stringHeader1)
+	fmt.Println(stringHeader2)
 
-	for i := 0; i < len(runes); i++ {
-		// fmt.Printf("%T, %d, %c\n", str3[i], str3[i], str3[i])
-		fmt.Printf("%T, %d, %c\n", runes[i], runes[i], runes[i])
-	}
+	var str3 string = "Hello world"
+	var slice []byte = []byte(str3)
 
-	fmt.Println()
+	// string: immutable
+	// str3[2] = 'a'
+	slice[2] = 'a'
 
-	for _, v := range str3 {
-		fmt.Printf("%T, %d, %c\n", v, v, v)
-	}
+	stringHeader3 := (*reflect.StringHeader)(unsafe.Pointer(&str3))
+	sliceHeader3 := (*reflect.StringHeader)(unsafe.Pointer(&slice))
+
+	fmt.Println(stringHeader3.Data)
+	fmt.Println(sliceHeader3.Data)
+
+	var str4 string = "Hello World!!"
+	fmt.Println(ToUpper1(str4))
+	fmt.Println(ToUpper2(str4))
 }
