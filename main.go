@@ -53,8 +53,8 @@ func main() {
 		fmt.Println(value.Area())
 	}
 
-	i := person.Person{}
-	i.SetDetails2("KAYLE", 20)
+	i := person.Person{Name: "Kayle", Age: 20}
+	// i.SetDetails2("KAYLE", 20)
 	i.HisName()
 	i.HisAge()
 }
