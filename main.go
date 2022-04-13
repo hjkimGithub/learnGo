@@ -2,34 +2,46 @@ package main
 
 import "fmt"
 
-func PrintVal(v interface{}) {
-	switch t := v.(type) {
-	case int:
-		fmt.Printf("v is int %d\n", int(t))
-	case float64:
-		fmt.Printf("v is float64 %f\n", float64(t))
-	case string:
-		fmt.Printf("v is string %s\n", string(t))
-	default:
-		fmt.Printf("Not supported type: %T:%v\n", t, t)
-	}
+type Stringer interface {
+	String() string
 }
 
 type Student struct {
 	Age int
 }
 
-type Attacker interface {
-	Attack()
+type Student2 struct {
+}
+
+type Actor struct {
+}
+
+func (a *Actor) String() string {
+	return "Actor"
+}
+
+func (s *Student) String() string {
+	return fmt.Sprintf("Student Age: %d", s.Age)
+}
+
+func PrintAge(stringer Stringer) {
+	s := stringer.(*Student)
+	fmt.Printf("Age: %d\n", s.Age)
+}
+
+func ConvertType(stringer Stringer) {
+	student := stringer.(*Student)
+	fmt.Println(student)
 }
 
 func main() {
-	PrintVal(10)
-	PrintVal(3.14)
-	PrintVal("Hello")
-	PrintVal(Student{15})
+	s := &Student{15}
+	PrintAge(s)
 
-	var att Attacker
-	// runtime error, nil interface
-	att.Attack()
+	// var stringer Stringer
+	// compile time error, impossible type asssertion
+	// stringer.(*Student2)
+
+	actor := &Actor{}
+	ConvertType(actor)
 }
