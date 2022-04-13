@@ -2,25 +2,34 @@ package main
 
 import "fmt"
 
-type Stringer interface {
-	String() string
+func PrintVal(v interface{}) {
+	switch t := v.(type) {
+	case int:
+		fmt.Printf("v is int %d\n", int(t))
+	case float64:
+		fmt.Printf("v is float64 %f\n", float64(t))
+	case string:
+		fmt.Printf("v is string %s\n", string(t))
+	default:
+		fmt.Printf("Not supported type: %T:%v\n", t, t)
+	}
 }
 
-// type Student struct implements Stringer
-type Student struct { // duck typing
-	Name string
-	Age  int
+type Student struct {
+	Age int
 }
 
-func (s Student) String() string {
-	return fmt.Sprintf("안녕! 나는 %d 살, %s 라고 해", s.Age, s.Name)
+type Attacker interface {
+	Attack()
 }
 
 func main() {
-	student := Student{"철수", 12}
-	var stringer Stringer
+	PrintVal(10)
+	PrintVal(3.14)
+	PrintVal("Hello")
+	PrintVal(Student{15})
 
-	stringer = student
-
-	fmt.Println(stringer.String())
+	var att Attacker
+	// runtime error, nil interface
+	att.Attack()
 }
