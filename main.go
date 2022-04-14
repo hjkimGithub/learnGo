@@ -2,24 +2,30 @@ package main
 
 import "fmt"
 
-type opFunc func(a, b int) int
+func CaptureLoop1() {
+	f := make([]func(), 3)
+	fmt.Println("CaptureLoop1")
+	for i := 0; i < 3; i++ {
+		f[i] = func() { fmt.Println(i) }
+	}
+	for i := 0; i < 3; i++ {
+		f[i]()
+	}
+}
 
-func getOp(op string) func(int, int) int {
-	if op == "+" {
-		return func(i1, i2 int) int { return i1 + i2 }
-	} else if op == "*" {
-		return func(i1, i2 int) int { return i1 * i2 }
-	} else {
-		return nil
+func CaptureLoop2() {
+	f := make([]func(), 3)
+	fmt.Println("CaptureLoop2")
+	for i := 0; i < 3; i++ {
+		v := i
+		f[i] = func() { fmt.Println(v) }
+	}
+	for i := 0; i < 3; i++ {
+		f[i]()
 	}
 }
 
 func main() {
-	var op func(int, int) int
-	// cannot use initial :=
-	// op := func(int, int) int
-	op = getOp("*")
-
-	var result = op(3, 4)
-	fmt.Println(result)
+	CaptureLoop1()
+	CaptureLoop2()
 }
