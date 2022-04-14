@@ -20,4 +20,9 @@ func main() {
 		return strings.Contains(s, "e")
 	}))
 
+	fmt.Println(collectionF.Map2(strs2, strings.ToUpper))
+
+	fmt.Println(collectionF.Index(strs2, "pear"))
+	fmt.Println(collectionF.Include(strs2, "grape"))
+
 }
