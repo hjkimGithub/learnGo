@@ -2,20 +2,13 @@ package main
 
 import "fmt"
 
-func add(a, b int) int {
-	return a + b
-}
-
-func mul(a, b int) int {
-	return a * b
-}
+type opFunc func(a, b int) int
 
 func getOp(op string) func(int, int) int {
-	// return op == "+" ? add : op == "*" ? mul : nil
 	if op == "+" {
-		return add
+		return func(i1, i2 int) int { return i1 + i2 }
 	} else if op == "*" {
-		return mul
+		return func(i1, i2 int) int { return i1 * i2 }
 	} else {
 		return nil
 	}
