@@ -1,31 +1,35 @@
 package main
 
-import "fmt"
+import (
+	"container/list"
+	"fmt"
 
-func CaptureLoop1() {
-	f := make([]func(), 3)
-	fmt.Println("CaptureLoop1")
-	for i := 0; i < 3; i++ {
-		f[i] = func() { fmt.Println(i) }
-	}
-	for i := 0; i < 3; i++ {
-		f[i]()
-	}
-}
-
-func CaptureLoop2() {
-	f := make([]func(), 3)
-	fmt.Println("CaptureLoop2")
-	for i := 0; i < 3; i++ {
-		v := i
-		f[i] = func() { fmt.Println(v) }
-	}
-	for i := 0; i < 3; i++ {
-		f[i]()
-	}
-}
+	"github.com/hjkimGithub/learnGo/datastructure"
+)
 
 func main() {
-	CaptureLoop1()
-	CaptureLoop2()
+	v := list.New()
+	e4 := v.PushBack(4)
+	e1 := v.PushFront(1)
+	v.InsertBefore(3, e4)
+	v.InsertAfter(2, e1)
+
+	for e := v.Front(); e != nil; e = e.Next() {
+		fmt.Print(e.Value, " ")
+	}
+	fmt.Println()
+	for e := v.Back(); e != nil; e = e.Prev() {
+		fmt.Print(e.Value, " ")
+	}
+
+	fmt.Println()
+	queue := datastructure.NewQueue()
+	for i := 1; i < 5; i++ {
+		queue.Push(i)
+	}
+	v2 := queue.Pop()
+	for v2 != nil {
+		fmt.Printf("%d ->\n", v)
+		v2 = queue.Pop()
+	}
 }
