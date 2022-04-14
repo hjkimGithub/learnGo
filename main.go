@@ -4,25 +4,18 @@ import (
 	"fmt"
 	"strings"
 
-	collectionF "github.com/hjkimGithub/learnGo/collectionFunctionEx"
+	"github.com/thoas/go-funk"
 )
 
-func add10(n int) int {
-	return n + 10
-}
-
 func main() {
-	strs1 := []int{1, 2, 3}
-	fmt.Println(collectionF.Map(strs1, add10))
+	contains := funk.Contains([]int{1, 2, 3, 4, 5}, 1)
+	fmt.Println(contains)
 
-	strs2 := []string{"peach", "apple", "pear", "plum"}
-	fmt.Println(collectionF.Filter(strs2, func(s string) bool {
-		return strings.Contains(s, "e")
-	}))
+	r := funk.Map([]int{1, 2, 3, 4}, func(x int) int {
+		return x * 2
+	})
+	fmt.Println(r)
 
-	fmt.Println(collectionF.Map2(strs2, strings.ToUpper))
-
-	fmt.Println(collectionF.Index(strs2, "pear"))
-	fmt.Println(collectionF.Include(strs2, "grape"))
-
+	r2 := funk.Map([]string{"a", "b", "3"}, strings.ToUpper)
+	fmt.Println(r2)
 }
