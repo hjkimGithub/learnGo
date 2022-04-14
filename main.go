@@ -1,21 +1,32 @@
 package main
 
-import (
-	"fmt"
-	"strings"
+import "fmt"
 
-	"github.com/thoas/go-funk"
-)
+func add(a, b int) int {
+	return a + b
+}
+
+func mul(a, b int) int {
+	return a * b
+}
+
+func getOp(op string) func(int, int) int {
+	// return op == "+" ? add : op == "*" ? mul : nil
+	if op == "+" {
+		return add
+	} else if op == "*" {
+		return mul
+	} else {
+		return nil
+	}
+}
 
 func main() {
-	contains := funk.Contains([]int{1, 2, 3, 4, 5}, 1)
-	fmt.Println(contains)
+	var op func(int, int) int
+	// cannot use initial :=
+	// op := func(int, int) int
+	op = getOp("*")
 
-	r := funk.Map([]int{1, 2, 3, 4}, func(x int) int {
-		return x * 2
-	})
-	fmt.Println(r)
-
-	r2 := funk.Map([]string{"a", "b", "3"}, strings.ToUpper)
-	fmt.Println(r2)
+	var result = op(3, 4)
+	fmt.Println(result)
 }
