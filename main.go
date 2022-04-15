@@ -2,25 +2,27 @@ package main
 
 import (
 	"fmt"
-
-	"github.com/hjkimGithub/learnGo/filerw"
+	"time"
 )
 
-const filename string = "data.txt"
+func PrintHangul() {
+	hanguls := []rune{'가', '나', '다', '라', '마', '바', '사'}
+	for _, v := range hanguls {
+		time.Sleep(300 * time.Millisecond)
+		fmt.Printf("%c", v)
+	}
+}
+
+func PrintNumber() {
+	for i := 1; i <= 5; i++ {
+		time.Sleep(400 * time.Millisecond)
+		fmt.Printf("%d", i)
+	}
+}
 
 func main() {
-	line, err := filerw.ReadFile(filename)
-	if err != nil {
-		err = filerw.WriteFile(filename, "switch a text")
-		if err != nil {
-			fmt.Println("파일 생성 실패", err)
-			return
-		}
-		line, err = filerw.ReadFile(filename)
-		if err != nil {
-			fmt.Println("파일 읽기 실패", err)
-			return
-		}
-	}
-	fmt.Println(line)
+	go PrintHangul()
+	go PrintNumber()
+
+	time.Sleep(3 * time.Second)
 }
