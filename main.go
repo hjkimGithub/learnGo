@@ -3,25 +3,41 @@ package main
 import (
 	"fmt"
 	"sync"
+	"time"
 )
 
-var wg sync.WaitGroup
+var mutex sync.Mutex
 
-func SumAtoB(a, b int) {
-	sum := 0
-	for i := a; i <= b; i++ {
-		sum += i
+type Account struct {
+	Balance int
+}
+
+func DepositAndWithdraw(account *Account) {
+	mutex.Lock()
+	defer mutex.Unlock()
+
+	if account.Balance < 0 {
+		panic(fmt.Sprintf("Balance cannot be negative: %d", account.Balance))
 	}
-	fmt.Printf("%d 부터 %d 까지 합계 %d\n", a, b, sum)
-	wg.Done()
+	account.Balance += 1000
+	time.Sleep(time.Millisecond)
+	account.Balance -= 1000
 }
 
 func main() {
+
+	var wg sync.WaitGroup
+
+	account := &Account{0}
 	wg.Add(10)
 	for i := 0; i < 10; i++ {
-		go SumAtoB(1, 1000000000)
+		go func() {
+			for {
+				fmt.Println("DepositAndWithdraw running")
+				DepositAndWithdraw(account)
+			}
+			wg.Done()
+		}()
 	}
-
 	wg.Wait()
-	fmt.Println("계산 완료")
 }
