@@ -2,42 +2,38 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
 	"sync"
 	"time"
 )
 
-var mutex sync.Mutex
-
-type Account struct {
-	Balance int
-}
-
-func DepositAndWithdraw(account *Account) {
-	mutex.Lock()
-	defer mutex.Unlock()
-
-	if account.Balance < 0 {
-		panic(fmt.Sprintf("Balance cannot be negative: %d", account.Balance))
-	}
-	account.Balance += 1000
-	time.Sleep(time.Millisecond)
-	account.Balance -= 1000
-}
+var wg sync.WaitGroup
 
 func main() {
+	rand.Seed(time.Now().UnixNano())
 
-	var wg sync.WaitGroup
+	wg.Add(2)
+	fork := &sync.Mutex{}
+	spoon := &sync.Mutex{}
 
-	account := &Account{0}
-	wg.Add(10)
-	for i := 0; i < 10; i++ {
-		go func() {
-			for {
-				fmt.Println("DepositAndWithdraw running")
-				DepositAndWithdraw(account)
-			}
-			wg.Done()
-		}()
-	}
+	go diningProblem("A", fork, spoon, "포크", "수저")
+	go diningProblem("B", spoon, fork, "수저", "포크")
 	wg.Wait()
+}
+
+func diningProblem(name string, first, second *sync.Mutex, firstName, secondName string) {
+	for i := 0; i < 100; i++ {
+		fmt.Printf("%s 밥먹으려 함\n", name)
+		first.Lock()
+		fmt.Printf("%s %s 획득\n", name, firstName)
+		second.Lock()
+		fmt.Printf("%s %s 획득\n", name, secondName)
+
+		fmt.Printf("%s 밥을 먹습니다\n", name)
+		time.Sleep(time.Duration(rand.Intn(1000)) * time.Millisecond)
+
+		second.Unlock()
+		first.Unlock()
+	}
+	wg.Done()
 }
